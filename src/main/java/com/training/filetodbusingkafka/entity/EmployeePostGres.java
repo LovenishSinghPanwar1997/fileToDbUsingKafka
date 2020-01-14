@@ -11,16 +11,13 @@ import java.util.Date;
 public class EmployeePostGres {
 
     @Id
-    @Column
     String firstName ;
 
-    @Column
     String lastName ;
 
-    @Column
     String dateOfBirth ;
 
-    @Column
+
     String experience ;
 
     public String getFirstName() {
