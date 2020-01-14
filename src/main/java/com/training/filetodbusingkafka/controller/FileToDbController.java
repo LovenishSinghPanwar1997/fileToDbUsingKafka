@@ -14,7 +14,7 @@ public class FileToDbController {
     FileToDbService fileToDbService;
 
     @GetMapping
-    public void start()
+    public void start() throws Exception
     {
         fileToDbService.transfer();
     }

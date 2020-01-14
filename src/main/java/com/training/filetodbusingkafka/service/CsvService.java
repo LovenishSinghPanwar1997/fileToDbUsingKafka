@@ -4,10 +4,8 @@ import com.training.filetodbusingkafka.entity.Employee;
 
 import java.util.List;
 
-public interface FileToDbService {
+public interface CsvService {
 
-     void transfer() throws Exception;
-
-
+    List<Employee> readCsv() throws Exception;
 
 }

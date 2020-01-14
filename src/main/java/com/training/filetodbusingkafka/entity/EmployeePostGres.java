@@ -1,16 +1,26 @@
 package com.training.filetodbusingkafka.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
-@Entity(name = "Employe")
+@Entity
+@Table(name = "Employee")
 public class EmployeePostGres {
 
     @Id
+    @Column
     String firstName ;
+
+    @Column
     String lastName ;
+
+    @Column
     String dateOfBirth ;
+
+    @Column
     String experience ;
 
     public String getFirstName() {
