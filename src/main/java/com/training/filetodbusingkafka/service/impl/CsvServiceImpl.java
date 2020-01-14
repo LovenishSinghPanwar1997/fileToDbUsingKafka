@@ -2,6 +2,7 @@ package com.training.filetodbusingkafka.service.impl;
 
 import com.training.filetodbusingkafka.entity.Employee;
 import com.training.filetodbusingkafka.service.CsvService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -13,10 +14,14 @@ import java.util.List;
 @Service
 public class CsvServiceImpl implements CsvService {
 
+    @Value("${csv.path}")
+    private static String path;
+
     @Override
     public List<Employee> readCsv() throws Exception {
         List<Employee> employees = new ArrayList<>();
-        String csvfile = "/Users/lovenishsinghpanwar/Downloads/employee.csv";
+        //TODO : CAN YOU MOVE THIS TO PROPERTY FILE(DONE)
+        String csvfile = path;
         BufferedReader br = null;
         String line = "";
         String splitby = ",";

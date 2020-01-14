@@ -10,6 +10,7 @@ import com.training.filetodbusingkafka.service.XMLService;
 import oracle.jvm.hotspot.jfr.Producer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -39,7 +40,9 @@ public class FileToDbServiceImpl implements FileToDbService {
 
     private static boolean flag = true;
 
+    @Value("${kafka.topic}")
     private static final String TOPIC = "mytopic";
+
     @Autowired
     private KafkaTemplate<String,String> kafkaTemplate;
 
@@ -48,10 +51,11 @@ public class FileToDbServiceImpl implements FileToDbService {
     }
 
 
-    public void sendMsgToTopic(Employee employeeMongo) {
+    //TODO : any annotation available to define the topic here(DONE)
+    public void sendMsgToTopic(Employee employee,String topic) {
 
         EmployeeSerializer employeeSerializer = new EmployeeSerializer();
-        byte[] bytearr = employeeSerializer.serialize("mytopic", employeeMongo);
+        byte[] bytearr = employeeSerializer.serialize(topic, employee);
         String msg = new String(bytearr,StandardCharsets.UTF_8);
 
         this.sendMessage(msg);
@@ -75,13 +79,15 @@ public class FileToDbServiceImpl implements FileToDbService {
 
         for (Employee e:finalList) {
 
-            sendMsgToTopic(e);
+            sendMsgToTopic(e,TOPIC);
         }
 
 
     }
 
-    @KafkaListener(topics = "mytopic",groupId = "1")
+
+    //todo : mytopic should come from property file, not hard coded here(DONE)
+    @KafkaListener(topics = TOPIC,groupId = "1")
     public void consume(String message) throws Exception
     {
         Employee employee;

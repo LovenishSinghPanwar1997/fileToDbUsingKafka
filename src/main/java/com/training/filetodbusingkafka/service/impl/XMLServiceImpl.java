@@ -5,6 +5,7 @@ import com.training.filetodbusingkafka.entity.EmployeeXML;
 import com.training.filetodbusingkafka.service.FileToDbService;
 import com.training.filetodbusingkafka.service.XMLService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBContext;
@@ -18,11 +19,16 @@ import java.util.List;
 @Service
 public class XMLServiceImpl implements XMLService
 {
+
+    @Value("${xml.path}")
+    private static String path;
+
     public List<Employee> readXML()
     {
         List<Employee> empList=new ArrayList<>();
         try {
-            File file = new File("/Users/lovenishsinghpanwar/Downloads/employee.xml");
+            //TODO : CAN YOU MOVE THIS TO PROPERTY FILE(DONE)
+            File file = new File(path);
             JAXBContext jaxbContext = JAXBContext.newInstance(EmployeeXML.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             EmployeeXML employeeXML = (EmployeeXML) jaxbUnmarshaller.unmarshal(file);

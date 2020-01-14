@@ -6,6 +6,7 @@ import com.training.filetodbusingkafka.service.JsonService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.FileReader;
@@ -18,11 +19,15 @@ import java.util.List;
 @Service
 public class JsonServiceImpl implements JsonService {
 
+    @Value("${json.path}")
+    private static String path;
+
     @Override
     public List<Employee> readJson() throws Exception {
 
         JSONParser jsonParser = new JSONParser();
-        FileReader reader = new FileReader("/Users/lovenishsinghpanwar/Downloads/employee.json");
+        //TODO : CAN YOU MOVE THIS TO PROPERTY FILE(DONE)
+        FileReader reader = new FileReader(path);
         Object object;
         object = jsonParser.parse(reader);
         // Date dateFormat=new Date("MM/dd/yy");
